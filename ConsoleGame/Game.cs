@@ -1,24 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Configuration;
-using System.Text;
 using BL;
 
 namespace ConsoleGame
 {
-    internal class Game
+    internal static class Game
     {
-        //private Model model;
-        public static void Main(string[] args)
+        public static void Main()
         {
-            Game model = new Game();
-            model.Start();
+            Console.Write("Type dimension: ");
+            Start(int.Parse(Console.ReadLine() ?? throw new InvalidOperationException()));
         }
 
-        private void Start() //Контроллер
+        private static void Start(int size)
         {
-            var model = new Model(4);
+            var model = new Model(size);
             model.Start();
             while (true)
             {
@@ -38,24 +33,22 @@ namespace ConsoleGame
                         model.Down();
                         break;
                     case ConsoleKey.Escape:
-                        model.Start();
-                        break;
+                        return;
                 }
             }
         }
 
         private static void Show(Model model)
         {
-            for (int y = 0; y < model.Size; y++)
+            for (var y = 0; y < model.Size; y++)
             {
-                for (int x = 0; x < model.Size; x++)
+                for (var x = 0; x < model.Size; x++)
                 {
                     Console.SetCursorPosition(x * 5 + 5, y * 2 + 2);
-                    int number = model.GetMap(x, y);
-                    Console.Write(number == 0 ? ". " : number.ToString() + " ");
+                    var number = model.GetMap(x, y);
+                    Console.Write(number == 0 ? ". " : number + " ");
                 }
             }
-
             Console.WriteLine();
             Console.WriteLine(model.IsGameOver() ? "Game Over" : "Still play");
         }

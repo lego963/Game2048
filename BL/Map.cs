@@ -2,50 +2,32 @@
 {
     internal class Map
     {
-        private int[,] map
+        public int this[int x, int y]
         {
-            get;
-            set;
-        }
-
-        //public int this[int x, int y]
-        //{
-        //    get
-        //    {
-                
-        //    }
-        //    set;
-        //}
-        private int size;
-        public Map(int size)
-        {
-            this.size = size;
-            map = new int[size, size];
-        }
-
-        public int Get(int x, int y)
-        {
-            if (OnMap(x, y))
+            get
             {
-                return map[x, y];
-            }
-            else
-            {
+                if (OnMap(x, y))
+                    return _map[x, y];
                 return -1;
             }
-        }
-
-        public void Set(int x, int y, int number)
-        {
-            if (OnMap(x, y))
+            set
             {
-                map[x, y] = number;
+                if (OnMap(x, y)) _map[x, y] = value;
             }
         }
 
-        public bool OnMap(int x, int y)
+        public int Size { get; }
+        private readonly int[,] _map;
+
+        public Map(int size)
         {
-            return x >= 0 && x < size && y >= 0 && y < size;
+            Size = size;
+            _map = new int[Size, Size];
+        }
+
+        private bool OnMap(int x, int y)
+        {
+            return x >= 0 && x < Size && y >= 0 && y < Size;
         }
     }
 }
